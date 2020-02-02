@@ -73,7 +73,7 @@ public class DateUtilJava8 {
 	}
 
 	public static void compareTime() {
-		int additonalHours=5;
+		int additonalHours=1;
 		LocalTime futureTime= addTime(additonalHours);
 		LocalTime pastTime= minusTime(additonalHours);
 		/*futureTime = 07:38:14.824
