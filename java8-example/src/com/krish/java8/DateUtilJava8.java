@@ -1,5 +1,9 @@
 package com.krish.java8;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +18,7 @@ public class DateUtilJava8 {
 	
 	
 
+	
 	public static void printZoneDate() {
 		ZonedDateTime presentTimeZone=ZonedDateTime.now(); //India
 		String dateTimeFormat= "dd-MM-yyyy HH :mm:ss";
@@ -124,6 +129,32 @@ public class DateUtilJava8 {
 		LocalDate dateNow=LocalDate.now(); //Present Date
 		Period dateDiffPast= Period.between(dateNow, dateOther);
 		return  dateDiffPast;
+	}
+	
+	public static String convertJavaToSQLDate(final String stringDate) throws ParseException {
+		String sqlDateStr="";
+		
+		try {
+		java.sql.Date sqlDate=java.sql.Date.valueOf(stringDate);
+		sqlDateStr= new SimpleDateFormat("dd-MMM-yy").format(sqlDate);
+		}
+		catch(RuntimeException re) {
+			
+		}
+		
+		return sqlDateStr;
+		
+	}
+	
+	public static String convertJavaToSQLDateForTimestamp(final String stringDate) throws ParseException {
+		
+		final DateFormat dateFormatYMD= new SimpleDateFormat(DateConstant.YYYY_MM_DD_HH_MM_SS);
+		final Timestamp dateTimeStamp
+		= Timestamp.valueOf(dateFormatYMD.format(dateFormatYMD.parse(stringDate)));
+		
+		final String SqlDateTime= new SimpleDateFormat(DateConstant.DD_MMM_YY_HH_MM_SS).format(dateTimeStamp);
+		return SqlDateTime;
+		
 	}
 
 }
