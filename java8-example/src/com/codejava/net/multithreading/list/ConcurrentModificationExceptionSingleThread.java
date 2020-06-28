@@ -1,7 +1,7 @@
 package com.codejava.net.multithreading.list;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * https://techvidvan.com/tutorials/java-concurrentmodificationexception/
@@ -14,12 +14,12 @@ public class ConcurrentModificationExceptionSingleThread {
 		/**
 		 * Case#1 ConcurrentModificationException using ArrayList
 		 */
-		ArrayList<Integer> list = new ArrayList<>();
+		// ArrayList<Integer> list = new ArrayList<>();
 
 		/**
 		 * Case#2 Fix of Case#1 ++++ use of CopyOnWriteArrayList
 		 */
-		// CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
+		CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
 		list.add(1);
 		list.add(2);
 		list.add(3);
@@ -32,7 +32,8 @@ public class ConcurrentModificationExceptionSingleThread {
 			Integer value = itr.next();
 			if (value.equals(3)) {// 3 will be removed
 				list.remove(value); /// It will throw ConcurrentModificationException!!!
-				// itr.remove(); //Fix
+				// list.add(7);
+				// itr.remove(); // Fix
 			}
 		}
 		System.out.println("*****Modified  List and 3 removed!!!**********");
