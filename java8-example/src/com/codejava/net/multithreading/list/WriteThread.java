@@ -19,8 +19,7 @@ public class WriteThread extends Thread
 	 
 	        while (true)
 	        {	 
-	            try  {	Thread.sleep(5000);	}
-	            catch (InterruptedException ex) {  ex.printStackTrace(); }
+			RabiThreadUtil.goToSleep(5000);
 	 
 	            list.add(count++);
 	 

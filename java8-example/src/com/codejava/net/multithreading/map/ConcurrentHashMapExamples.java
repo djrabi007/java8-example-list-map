@@ -1,6 +1,5 @@
 package com.codejava.net.multithreading.map;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,15 +36,15 @@ public class ConcurrentHashMapExamples {
 		 * Case#1 using HashMap - GET ConcurrentModificationException
 		 */
 
-		Map<Integer, String> map = new HashMap<>();
-		newProcessWithHashMap(map);
+		// Map<Integer, String> map = new HashMap<>();
+		// newProcessWithHashMap(map);
 
 		/**
 		 * Case#2 Fix of Case#1 using ConcurrentHashMap NO NO
 		 * ConcurrentModificationException
 		 */
-//		ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
-//		newProcessWithConcurrentHashMap(map);
+		ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();
+		newProcessWithConcurrentHashMap(map);
 
 
 	}

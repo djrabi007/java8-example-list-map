@@ -29,8 +29,8 @@ public class ReadThread extends Thread
 	                output += " " + next;
 	 
 	                // fake processing time
-	                try  {	Thread.sleep(10);	}
-		            catch (InterruptedException ex) {  ex.printStackTrace(); }
+
+				RabiThreadUtil.goToSleep(10);
 
 	            }
 	 

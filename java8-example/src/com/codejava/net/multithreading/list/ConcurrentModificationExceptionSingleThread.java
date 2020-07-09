@@ -33,7 +33,7 @@ public class ConcurrentModificationExceptionSingleThread {
 			if (value.equals(3)) {// 3 will be removed
 				list.remove(value); /// It will throw ConcurrentModificationException!!!
 				// list.add(7);
-				// itr.remove(); // Fix
+				// itr.remove(); // Fix for ArrayList. UnsupportedException for COWAL !!!
 			}
 		}
 		System.out.println("*****Modified  List and 3 removed!!!**********");

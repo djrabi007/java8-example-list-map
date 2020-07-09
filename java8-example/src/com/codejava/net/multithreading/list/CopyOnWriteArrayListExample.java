@@ -22,16 +22,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class CopyOnWriteArrayListExample {
 	public static void main(String[] args) {
-		 multiThreadListExample();
+		multiThreadListExample();
 
 		/**
 		 * Thread Safe and prevent Duplication!!
 		 */
-		addIfAbsentExample();
-		withoutAddIfAbsentExample();
-		System.out.println("*****************************");
-		addAllAbsentExample();
-		withoutAddAllAbsentExample();
+//		addIfAbsentExample();
+//		withoutAddIfAbsentExample();
+//		System.out.println("*****************************");
+//		addAllAbsentExample();
+//		withoutAddAllAbsentExample();
 
 	}
 
@@ -91,12 +91,12 @@ public class CopyOnWriteArrayListExample {
 		 * element to the list. The reader thread die and only the writer thread alive.
 		 * CopyOnWriteArrayList can be used as a thread safe alternative to ArrayList
 		 */
-		// List<Integer> list = new CopyOnWriteArrayList<>();
+		List<Integer> list = new CopyOnWriteArrayList<>();
 
 		/**
 		 * Case#2 ConcurrentModificationException
 		 */
-		List<Integer> list = new ArrayList<>();
+		// List<Integer> list = new ArrayList<>();
 
 		list.add(1);
 		list.add(2);
