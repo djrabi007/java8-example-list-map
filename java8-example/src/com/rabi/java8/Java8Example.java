@@ -4,19 +4,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class Java8Example {
 	
 	public static void main(String[] args) {
 		
-		listExample();
+		// listExample();
 		
-		mapExample();
+		// mapExample();
 		
-		
+		atomicIntegerCounter();
 		
 	}
+
+
+	private static void atomicIntegerCounter() {
+		AtomicInteger counter = new AtomicInteger(13);
+		new Thread(new CounterThread(counter), "Thread-1").start();
+		new Thread(new CounterThread(counter), "Thread-2").start();
+		new Thread(new CounterThread(counter), "Thread-3").start();
+		new Thread(new CounterThread(counter), "Thread-4").start();
+		new Thread(new CounterThread(counter), "Thread-5").start();
+		new Thread(new CounterThread(counter), "Thread-6").start();
+		new Thread(new CounterThread(counter), "Thread-7").start();
+		new Thread(new CounterThread(counter), "Thread-8").start();
+
+	}
+
+
 
 	private static void mapExample() {
 		Map<Integer, String> hm=new HashMap<>();
