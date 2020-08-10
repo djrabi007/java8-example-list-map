@@ -8,12 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author rabi0
  *
  */
-public class CounterThread implements Runnable {
+public class CounterThreadTask implements Runnable {
 
-	private static final String DELIM = " ### ";
 	AtomicInteger counter;
 	static Integer i = 0;
-	public CounterThread(AtomicInteger counter) {
+	public CounterThreadTask(AtomicInteger counter) {
 		this.counter = counter;
 	}
 
@@ -21,27 +20,19 @@ public class CounterThread implements Runnable {
 	@Override
 	public void run() {
 
-		// Initial value of Counter =13 (passing)
-		/**
-		 * increment and NEW value returned (13+1 onwards)
-		 */
-		int newCounter = counter.incrementAndGet();
-
-		/**
-		 * increment and OLD value returned(13 onwards)
-		 */
-		// int prevCounter = counter.getAndIncrement();
+		int newCounter = counter.incrementAndGet(); // New Value
+		// int prevCounter = counter.getAndIncrement(); //Old Value
 
 		String threadName = Thread.currentThread().getName();
 		i = i + 1;
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(threadName);
-		sb.append(DELIM);
+		sb.append(StringConstant.DELIM);
 		sb.append("newCounter = " + newCounter);
-		sb.append(DELIM);
+		sb.append(StringConstant.DELIM);
 		// sb.append("prevCounter= " + prevCounter);
-		sb.append(DELIM);
+		sb.append(StringConstant.DELIM);
 		sb.append("i =" + i);
 
 		System.out.println(sb);

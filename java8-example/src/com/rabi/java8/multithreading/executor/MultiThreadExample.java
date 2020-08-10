@@ -16,9 +16,10 @@ public class MultiThreadExample {
 		// int nThreads = 10;
 		int nThreads = Runtime.getRuntime().availableProcessors();
 
+		System.out.println("Core of CPU= " + nThreads);
 		// Create Thread Pool
 		ExecutorService es = Executors.newFixedThreadPool(nThreads);
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 50; i++) {
 			es.execute(new Task());
 		}
 		ThreadUtil.printThread();

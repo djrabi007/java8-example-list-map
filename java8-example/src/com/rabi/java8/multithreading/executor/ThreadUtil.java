@@ -6,4 +6,8 @@ public class ThreadUtil {
 		System.out.println(" Running " + Thread.currentThread().getName());
 	}
 
+	public static String printThreadVal() {
+		return Thread.currentThread().getName();
+	}
+
 }
