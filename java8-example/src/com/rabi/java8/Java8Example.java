@@ -46,6 +46,11 @@ public class Java8Example {
 		List<Car> lstCar = StreamRabiUtil.populateCarList();
 		List<Car> lstCarEmpty = new ArrayList<>();
 
+		statisticsAndGroup(lstCar, lstCarEmpty);
+
+	}
+
+	private static void statisticsAndGroup(List<Car> lstCar, List<Car> lstCarEmpty) {
 		double avgCost = StreamRabiUtil.getAverageCarCost(lstCar);
 		double avgCostEmpty = StreamRabiUtil.getAverageCarCost(lstCarEmpty);
 		double minCost = StreamRabiUtil.getMinCarCost(lstCar);
@@ -72,7 +77,6 @@ public class Java8Example {
 		StreamRabiUtil.printGroupCarMap(groupingByColor);
 		System.out.println("--------------GROUP BY MODEL----------------------");
 		StreamRabiUtil.printGroupCarMap(groupingByMake);
-
 	}
 
 	private static void streamWithEmployeeObject() {
