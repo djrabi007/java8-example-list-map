@@ -3,12 +3,107 @@ package com.rabi.java8.stream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StreamRabiUtil {
+
+	public static final String COLOR = "COLOR";
+	public static final String MAKE = "MAKE";
+
+	public static List<Car> populateCarList() {
+		List<Car> lstCar = new ArrayList<>();
+
+		lstCar.add(new Car(1, "Nissan", 76.5, "Red"));
+		lstCar.add(new Car(2, "Honda", 26.5, "Yellow"));
+		lstCar.add(new Car(3, "Tata", 36.1, "Red"));
+		lstCar.add(new Car(4, "Maruti", 86.2, "Red"));
+		lstCar.add(new Car(12, "Nissan", 46.5, "Blue"));
+		lstCar.add(new Car(11, "Nissan", 26.5, "Red"));
+		lstCar.add(new Car(10, "Nissan", 76.5, "Green"));
+		lstCar.add(new Car(21, "Nissan", 76.5, "Red"));
+		lstCar.add(new Car(43, "Maruti", 86.2, "Blue"));
+		lstCar.add(new Car(54, "Maruti", 86.2, "Green"));
+		lstCar.add(new Car(64, "Maruti", 86.2, "Yellow"));
+		lstCar.add(new Car(74, "Maruti", 86.2, "Black"));
+		lstCar.add(new Car(134, "Maruti", 86.2, "Orange"));
+		lstCar.add(new Car(34, "Tata", 36.1, "Red"));
+		lstCar.add(new Car(35, "Tata", 36.1, "Yelow"));
+		lstCar.add(new Car(36, "Tata", 36.1, "Green"));
+
+		return lstCar;
+
+	}
+
+	public static void printCarList(List<Car> lstCar) {
+		lstCar.forEach(car -> System.out
+				.println(car.getId() + "::" + car.getMake() + "::" + car.getColor() + "::: " + car.getPrice()));
+	}
+
+	public static double getAverageCarCost(List<Car> lstCar) {
+		return lstCar.stream().mapToDouble(Car::getPrice).average().orElse(-999);
+
+	}
+
+	public static double getMinCarCost(List<Car> lstCar) {
+		return lstCar.stream().mapToDouble(Car::getPrice).min().orElse(-100);
+
+	}
+
+	public static double getMaxCarCost(List<Car> lstCar) {
+		return lstCar.stream().mapToDouble(Car::getPrice).max().orElse(-100);
+
+	}
+
+	public static double getSumCarCost(List<Car> lstCar) {
+		return lstCar.stream().mapToDouble(Car::getPrice).sum();
+
+	}
+
+	public static DoubleSummaryStatistics getSummaryStat(List<Car> lstCar) {
+		return lstCar.stream().mapToDouble(Car::getPrice).summaryStatistics();
+
+	}
+
+	public static double getCountOfCar(List<Car> lstCar, String color) {
+		return lstCar.stream().filter(c -> color.equals(c.getColor())).count();
+
+	}
+
+	public static Map<String, List<Car>> getGroupingBy(List<Car> lstCar, String groupType) {
+
+		Map<String, List<Car>> grouping = null;
+		
+		switch(groupType) {
+		
+		case MAKE:
+			grouping = lstCar.stream().collect(Collectors.groupingBy(Car::getMake));
+			break;
+
+		case COLOR:
+			grouping = lstCar.stream().collect(Collectors.groupingBy(Car::getColor));
+			break;
+
+		default:
+			break;
+
+		}
+		return grouping;
+	}
+
+	public static void printGroupCarMap(Map<String, List<Car>> groupingBy) {
+		groupingBy.forEach((grType, carLst) -> {
+			System.out.println(grType);
+			carLst.forEach(System.out::println);
+
+		});
+
+	}
+
 
 	/**
 	 * Hardcoded List of Employee

@@ -1,6 +1,7 @@
 package com.rabi.java8;
 
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+import com.rabi.java8.stream.Car;
 import com.rabi.java8.stream.NewEmployee;
 import com.rabi.java8.stream.StreamRabiUtil;
 
@@ -30,13 +32,48 @@ public class Java8Example {
 	}
 
 	private static void streamExample() {
-		streamWithArray();
-		streamWithRange();
-		streamWithEmployeeObject();
+		// streamWithArray();
+		// streamWithRange();
+		// streamWithEmployeeObject();
 
+		streamWithCarObject();
 
 	}
 
+
+	private static void streamWithCarObject() {
+
+		List<Car> lstCar = StreamRabiUtil.populateCarList();
+		List<Car> lstCarEmpty = new ArrayList<>();
+
+		double avgCost = StreamRabiUtil.getAverageCarCost(lstCar);
+		double avgCostEmpty = StreamRabiUtil.getAverageCarCost(lstCarEmpty);
+		double minCost = StreamRabiUtil.getMinCarCost(lstCar);
+		double maxCost = StreamRabiUtil.getMaxCarCost(lstCar);
+		double sumCost = StreamRabiUtil.getSumCarCost(lstCar);
+		double countOfCar = StreamRabiUtil.getCountOfCar(lstCar, "Green");
+
+		DoubleSummaryStatistics allStat = StreamRabiUtil.getSummaryStat(lstCar);
+
+		Map<String, List<Car>> groupingByColor = StreamRabiUtil.getGroupingBy(lstCar, StreamRabiUtil.COLOR);
+		Map<String, List<Car>> groupingByMake = StreamRabiUtil.getGroupingBy(lstCar, StreamRabiUtil.MAKE);
+
+		System.out.println("#############Original List of Car #######");
+		StreamRabiUtil.printCarList(lstCar);
+		System.out.println("-----------------M-1 (Statistics)-------------------");
+		System.out.println(
+				"avgCost =" + avgCost + "   >>>>> avgCostEmpty= " + avgCostEmpty + ">>> countOfCar =" + countOfCar);
+		System.out.println("\n\n minCost =" + minCost + "   >>>>> maxCost= " + maxCost
+				+ " >>>> sumCost= " + sumCost);
+		System.out.println("-----------------M-2 (Statistics)-------------------");
+		System.out.println(allStat);
+
+		System.out.println("\n \n ---------------GROUP BY COLOR---------------------");
+		StreamRabiUtil.printGroupCarMap(groupingByColor);
+		System.out.println("--------------GROUP BY MODEL----------------------");
+		StreamRabiUtil.printGroupCarMap(groupingByMake);
+
+	}
 
 	private static void streamWithEmployeeObject() {
 
