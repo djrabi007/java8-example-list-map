@@ -12,26 +12,29 @@ import java.util.stream.IntStream;
 
 public class StreamRabiUtil {
 
+	public static final String NISSAN = "Nissan";
+	public static final String BLUE = "Blue";
+	public static final String RED = "Red";
 	public static final String COLOR = "COLOR";
 	public static final String MAKE = "MAKE";
 
 	public static List<Car> populateCarList() {
 		List<Car> lstCar = new ArrayList<>();
 
-		lstCar.add(new Car(1, "Nissan", 76.5, "Red"));
+		lstCar.add(new Car(1, NISSAN, 76.5, RED));
 		lstCar.add(new Car(2, "Honda", 26.5, "Yellow"));
-		lstCar.add(new Car(3, "Tata", 36.1, "Red"));
-		lstCar.add(new Car(4, "Maruti", 86.2, "Red"));
-		lstCar.add(new Car(12, "Nissan", 46.5, "Blue"));
-		lstCar.add(new Car(11, "Nissan", 26.5, "Red"));
-		lstCar.add(new Car(10, "Nissan", 76.5, "Green"));
-		lstCar.add(new Car(21, "Nissan", 76.5, "Red"));
-		lstCar.add(new Car(43, "Maruti", 86.2, "Blue"));
+		lstCar.add(new Car(3, "Tata", 36.1, RED));
+		lstCar.add(new Car(4, "Maruti", 86.2, RED));
+		lstCar.add(new Car(12, NISSAN, 46.5, BLUE));
+		lstCar.add(new Car(11, NISSAN, 26.5, RED));
+		lstCar.add(new Car(10, NISSAN, 76.5, "Green"));
+		lstCar.add(new Car(21, NISSAN, 76.5, RED));
+		lstCar.add(new Car(43, "Maruti", 86.2, BLUE));
 		lstCar.add(new Car(54, "Maruti", 86.2, "Green"));
 		lstCar.add(new Car(64, "Maruti", 86.2, "Yellow"));
 		lstCar.add(new Car(74, "Maruti", 86.2, "Black"));
 		lstCar.add(new Car(134, "Maruti", 86.2, "Orange"));
-		lstCar.add(new Car(34, "Tata", 36.1, "Red"));
+		lstCar.add(new Car(34, "Tata", 36.1, RED));
 		lstCar.add(new Car(35, "Tata", 36.1, "Yelow"));
 		lstCar.add(new Car(36, "Tata", 36.1, "Green"));
 

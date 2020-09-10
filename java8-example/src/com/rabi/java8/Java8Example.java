@@ -9,7 +9,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.rabi.java8.stream.Car;
@@ -35,19 +39,142 @@ public class Java8Example {
 		// streamWithArray();
 		// streamWithRange();
 		// streamWithEmployeeObject();
+		// streamWithCarObjectStatistics();
 
-		streamWithCarObject();
+		imperativeVsDeclarative();
+		functionalInterfaceExample(); // Functional Interfac :: With Return Type
+		normalVsConsumerInterfaceExample(); // Consumer Interface :: No Return Type
+		predicateExample(); // Predicate Interface :: boolean return Type
 
 	}
 
+	/**
+	 * 1. test() 2. and()/or() 3. removeIf()
+	 */
+	private static void predicateExample() {
+		List<Car> carLst = StreamRabiUtil.populateCarList();
 
-	private static void streamWithCarObject() {
+		// *****************Define Predicate************************
+		/**
+		 * 1. RED Car 2. BLUE Car 3. NISSAN Car
+		 */
+		Predicate<Car> prdREDCar = car -> StreamRabiUtil.RED.equals(car.getColor());
+		Predicate<Car> prdBLUECar = car -> StreamRabiUtil.BLUE.equals(car.getColor());
+		Predicate<Car> prdNISSANCar = car -> StreamRabiUtil.NISSAN.equals(car.getMake());
+		System.out.println("--------------Print Car by Predicate-test()------------");
+		// printByPredCar(carLst, prdREDCar);
+		// printByPredCar(carLst, prdBLUECar);
+		printByPredCar(carLst, prdNISSANCar);
+		System.out.println("--------------Print Car by Predicate-+filter()------------");
+		List<Car> carLstREDFltr = filterCar(carLst, prdREDCar);
+		List<Car> carLstNISSANFltr = filterCar(carLst, prdNISSANCar);
+		// ****************REMOVE Red car from NISSAN****************
+		// carLstNISSANFltr.removeIf(prdREDCar);
+		// ***********Predicate Combination!!!****************
+		List<Car> carLstRedNISSANFltr = filterCar(carLst, prdNISSANCar.and(prdREDCar));
+		List<Car> carLstBlueNISSANFltr = filterCar(carLst, prdNISSANCar.and(prdBLUECar));
+		System.out.println("\n NISSAN ONLY \n" + carLstNISSANFltr + "\n RED+NISSAN \n" + carLstRedNISSANFltr
+				+ "\n BLUE+NISSAN \n" + carLstBlueNISSANFltr);
+
+	}
+
+	private static List<Car> filterCar(List<Car> carLst, Predicate<Car> prdREDCar) {
+		List<Car> carLstFltr = carLst.stream().filter(prdREDCar).collect(Collectors.toList());
+		return carLstFltr;
+	}
+
+
+	/**
+	 * test()
+	 * 
+	 * @param carLst
+	 * @param prdREDCar
+	 */
+	private static void printByPredCar(List<Car> carLst, Predicate<Car> prdREDCar) {
+		for (Car car : carLst) {
+			if (prdREDCar.test(car)) {
+				System.out.println(car);
+			}
+		}
+	}
+
+	/**
+	 * .accept()
+	 */
+	private static void normalVsConsumerInterfaceExample() {
+
+		Car car1 = StreamRabiUtil.populateCarList().get(2);
+		greetCarByNormalMethod(car1);
+		System.out.println("------------Green by Consumer-accept() Call-----------------");
+		greetByConsumerInterface.accept(car1);
+
+	}
+
+	private static void greetCarByNormalMethod(Car car) {
+		System.out.println("------------Green by NORMAL Method Call-----------------");
+		printGreetCar(car);
+
+	}
+
+	static Consumer<Car> greetByConsumerInterface = car -> printGreetCar(car);
+
+	private static void printGreetCar(Car car) {
+		System.out.println("Car with color= " + car.getColor() + " Make =" + car.getMake());
+	}
+
+	/**
+	 * 1. apply() 2. andThen()
+	 */
+	private static void functionalInterfaceExample() {
+
+		int incrByMethod = incrementBy1(1);
+		int incrByFunctionalInterface = incrementBy1Function.apply(5);
+		int multiByFunctionalInterface = multiplyBy10Function.apply(5);
+		int incrementAndMultiply = incrementBy1AndMultiplyBy10Function.apply(5);
+		int incrBy1Mult = incrBy1MultFunction.apply(5, 7);
+
+		System.out
+				.println(">>>incrByMethod= " + incrByMethod + "\n >>> incrByFunctionalInterface = "
+						+ incrByFunctionalInterface + "\n >> multiByFunctionalInterface =" + multiByFunctionalInterface
+						+ "\n >>incrementAndMultiply = " + incrementAndMultiply + " \n >>incrBy1Mult = " + incrBy1Mult);
+
+	}
+
+	private static int incrementBy1(int i) {
+		return i + 1;
+	}
+
+	static Function<Integer, Integer> incrementBy1Function = n -> n + 1;
+	static Function<Integer, Integer> multiplyBy10Function = n -> n * 10;
+	static Function<Integer, Integer> incrementBy1AndMultiplyBy10Function = incrementBy1Function
+			.andThen(multiplyBy10Function); // .andThen()
+
+	static BiFunction<Integer, Integer, Integer> incrBy1MultFunction = (a, b) -> (a + 1) * b;
+
+	private static void streamWithCarObjectStatistics() {
 
 		List<Car> lstCar = StreamRabiUtil.populateCarList();
 		List<Car> lstCarEmpty = new ArrayList<>();
-
 		statisticsAndGroup(lstCar, lstCarEmpty);
 
+	}
+
+	private static void imperativeVsDeclarative() {
+		List<Car> lstCar = StreamRabiUtil.populateCarList();
+		// ********************** Imperative Approach - Get Red Car
+		List<Car> lstRedCar = new ArrayList<>();
+		
+		for (Car rCar : lstCar) {
+			if (StreamRabiUtil.RED.equals(rCar.getColor())) {
+				lstRedCar.add(rCar);
+			}
+		}
+		System.out.println("############List Of RED car :: IMPERATIVE APPROACH #######");
+		StreamRabiUtil.printCarList(lstRedCar);
+		
+		// ******************* Declarative Approach - Get Red Car
+		System.out.println("############List Of RED car :: DECLARATIVE APPROACH #######");
+		lstCar.stream().filter(rCar -> StreamRabiUtil.RED.equals(rCar.getColor())).forEach(System.out::println);
 	}
 
 	private static void statisticsAndGroup(List<Car> lstCar, List<Car> lstCarEmpty) {

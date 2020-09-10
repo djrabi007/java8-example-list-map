@@ -15,6 +15,7 @@ public class Car {
 		this.color = color;
 	}
 
+
 	public int getId() {
 		return id;
 	}
