@@ -28,31 +28,67 @@ public class Java8Utility {
 		employees.add(new Employee("Nikhil", "Gupta", 6000.0, lstOfProject2));
 
 		employees.add(new Employee("Shivam", "Kumar", 5500.0, lstOfProject3));
+		employees.add(new Employee("Rabi", "Podder", 9000.0, lstOfProject3));
+		employees.add(new Employee("Nikhil", "Banerjee", 9000.0, lstOfProject3));
+
 
 	}
 
 	public static void shortCircuitExampleV2() {
-		Stream.generate(Math::random).limit(5).forEach(value -> System.out.println(value));
+		Stream.generate(Math::random).limit(3).forEach(value -> System.out.println(value));
 	}
 
+	// Summation of Salary for all Employee in the list!! ..aggregate function
+	// sum/max/min
 	public static void reduceExample() {
 		Double totalSal = employees.stream().map(employee -> employee.getSalary()).reduce(0.0, Double::sum);
 		System.out.println(totalSal);
 	}
 
+	// ISSUE::if 2 employee have highest salary i.e. 9000 . it would give 1st!!
 	public static void minMaxExample() {
-		employees.stream().max(Comparator.comparing(Employee::getSalary)).orElseThrow(NoSuchElementException::new);
+		Employee emp = employees.stream().max(Comparator.comparing(Employee::getSalary))
+				.orElseThrow(NoSuchElementException::new);
+		System.out.println(emp);
+	}
+
+	// Descending order...highest 1st.... lowest last
+	public static void minMaxExampleV2() {
+		List<Employee> empList = employees.stream().sorted((e1, e2) -> e2.getSalary().compareTo(e1.getSalary()))
+				.limit(2)
+				.collect(Collectors.toList());
+		printEmployee(empList);
 	}
 
 	public static void sortingExample() {
 		List<Employee> sortedEmployees = employees.stream()
 				.sorted((o1, o2) -> o1.getFirstName().compareToIgnoreCase(o2.getFirstName()))
 				.collect(Collectors.toList());
-		System.out.println(sortedEmployees);
+		printEmployee(sortedEmployees);
+		// System.out.println(sortedEmployees);
+
 	}
 
+	private static void printEmployee(List<Employee> sortedEmployees) {
+		sortedEmployees.forEach(emp -> System.out.println(emp));
+	}
+
+	// Multiple Compare!!!!
+	public static void sortingExampleV2() {
+
+		List<Employee> sortedEmployees = employees.stream()
+				.sorted(Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName))
+				.collect(Collectors.toList());
+
+		printEmployee(sortedEmployees);
+		// System.out.println(sortedEmployees);
+	}
+
+
 	public static void shortCircuitExample() {
-		List<Employee> shortCircuit = employees.stream().skip(1).limit(1).collect(Collectors.toList());
+		List<Employee> shortCircuit = employees.stream().skip(1) // 1st Element removed... it would show 2nd and 3rd
+				.limit(1) // it would show 1 element only.
+				.collect(Collectors.toList());
 		System.out.println(shortCircuit);
 	}
 
@@ -83,15 +119,10 @@ public class Java8Utility {
 		System.out.println(firstEmployee); // findFirst is the terminal operation ...
 	}
 
-	// filter
+	// filter is taking predicate i.e.if/else...
 	public static void filterExample() {
 		List<Employee> filterEmployee = employees.stream().filter(employee -> employee.getSalary() > 5000.0) // filter
-																												// is
-																												// taking
-																												// predicate
-																												// i.e.
-																												// if/else
-																												// ...
+
 				.map(employee -> new Employee(employee.getFirstName(), employee.getLastName(),
 						employee.getSalary() * 1.10, employee.getProjects()))
 				.collect(Collectors.toList());

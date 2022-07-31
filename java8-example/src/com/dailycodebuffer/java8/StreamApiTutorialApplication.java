@@ -31,9 +31,11 @@ public class StreamApiTutorialApplication {
 
 		// sorting
 		Java8Utility.sortingExample();
+		Java8Utility.sortingExampleV2();
 
 		// min or max
-		Java8Utility.minMaxExample();
+		Java8Utility.minMaxExample(); // Highest Salary 1 person
+		Java8Utility.minMaxExampleV2(); // Highest Salary Person (2 person)
 
 		// reduce
 		Java8Utility.reduceExample();
